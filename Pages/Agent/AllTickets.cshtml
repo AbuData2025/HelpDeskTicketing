@@ -1,0 +1,55 @@
+@page
+@model HelpDeskTicketing.Pages.Agent.AllTicketsModel
+@{
+    ViewData["Title"] = "All Tickets";
+}
+
+<h1>All Tickets</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Submitted By</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Assigned To</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model.Tickets)
+        {
+            <tr>
+                <td>@ticket.Title</td>
+                <td>@ticket.SubmittedByUser?.FullName</td>
+                <td>@ticket.Category</td>
+                <td>@ticket.Priority</td>
+                <td>@ticket.Status</td>
+                <td>@(ticket.AssignedToUser?.FullName ?? "Unassigned")</td>
+                <td>
+                    <form method="post" asp-page-handler="AssignToMe" asp-route-ticketId="@ticket.Id" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Assign to Me</button>
+                    </form>
+
+                    <form method="post" asp-page-handler="UpdateStatus" asp-route-ticketId="@ticket.Id" style="display:inline">
+                        <select name="newStatus" class="form-select form-select-sm d-inline" style="width:auto" onchange="this.form.submit()">
+                            @foreach (var status in Enum.GetValues<HelpDeskTicketing.Models.TicketStatus>())
+                            {
+                                if (status == ticket.Status)
+                                {
+                                    <option value="@status" selected>@status</option>
+                                }
+                                else
+                                {
+                                    <option value="@status">@status</option>
+                                }
+                            }
+                        </select>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
