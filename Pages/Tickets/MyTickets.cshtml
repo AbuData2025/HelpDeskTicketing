@@ -1,0 +1,42 @@
+@page
+@model HelpDeskTicketing.Pages.Tickets.MyTicketsModel
+@{
+    ViewData["Title"] = "My Tickets";
+}
+
+<h1>My Tickets</h1>
+
+<p>
+    <a asp-page="./Create" class="btn btn-primary">Submit a New Ticket</a>
+</p>
+
+@if (!Model.Tickets.Any())
+{
+    <p>You haven't submitted any tickets yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Submitted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model.Tickets)
+            {
+                <tr>
+                    <td>@ticket.Title</td>
+                    <td>@ticket.Category</td>
+                    <td>@ticket.Priority</td>
+                    <td>@ticket.Status</td>
+                    <td>@ticket.CreatedAt.ToLocalTime().ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

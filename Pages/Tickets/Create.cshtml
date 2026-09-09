@@ -1,0 +1,39 @@
+@page
+@model HelpDeskTicketing.Pages.Tickets.CreateModel
+@{
+    ViewData["Title"] = "Submit a Ticket";
+}
+
+<h1>Submit a Ticket</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Ticket.Title" class="form-control" placeholder="Title" />
+                <label asp-for="Ticket.Title">Title</label>
+                <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea asp-for="Ticket.Description" class="form-control" style="height: 120px" placeholder="Describe the issue"></textarea>
+                <label asp-for="Ticket.Description">Description</label>
+                <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select asp-for="Ticket.Category" class="form-select" asp-items="Html.GetEnumSelectList<HelpDeskTicketing.Models.TicketCategory>()"></select>
+                <label asp-for="Ticket.Category">Category</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select asp-for="Ticket.Priority" class="form-select" asp-items="Html.GetEnumSelectList<HelpDeskTicketing.Models.TicketPriority>()"></select>
+                <label asp-for="Ticket.Priority">Priority</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Ticket</button>
+        </form>
+    </div>
+</div>
