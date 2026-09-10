@@ -5,6 +5,25 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    if (User.IsInRole("ITAgent") || User.IsInRole("Admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Agent/AllTickets">All Tickets</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Tickets/MyTickets">My Tickets</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Tickets/Create">Submit Ticket</a>
+        </li>
+    }
+
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
