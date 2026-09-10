@@ -12,6 +12,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Ticket> Tickets { get; set; } = default!;
+    public DbSet<TicketComment> TicketComments { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -30,5 +31,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(t => t.AssignedToUserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<TicketComment>()
+            .HasOne(c => c.Ticket)
+            .WithMany()
+            .HasForeignKey(c => c.TicketId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+       builder.Entity<TicketComment>()
+            .HasOne(c => c.AuthorUser)
+            .WithMany()
+            .HasForeignKey(c => c.AuthorUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
     }
 }
