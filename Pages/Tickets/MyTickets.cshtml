@@ -32,8 +32,8 @@ else
                 <tr>
                     <td><a asp-page="./Details" asp-route-id="@ticket.Id">@ticket.Title</a></td>
                     <td>@ticket.Category</td>
-                    <td>@ticket.Priority</td>
-                    <td>@ticket.Status</td>
+                    <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(ticket.Priority)">@ticket.Priority</span></td>
+                    <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(ticket.Status)">@ticket.Status</span></td>
                     <td>@ticket.CreatedAt.ToLocalTime().ToString("g")</td>
                 </tr>
             }

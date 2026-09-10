@@ -25,8 +25,8 @@
                 <td><a asp-page="/Tickets/Details" asp-route-id="@ticket.Id">@ticket.Title</a></td>
                 <td>@ticket.SubmittedByUser?.FullName</td>
                 <td>@ticket.Category</td>
-                <td>@ticket.Priority</td>
-                <td>@ticket.Status</td>
+                <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(ticket.Priority)">@ticket.Priority</span></td>
+                <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(ticket.Status)">@ticket.Status</span></td>
                 <td>@(ticket.AssignedToUser?.FullName ?? "Unassigned")</td>
                 <td>
                     <form method="post" asp-page-handler="AssignToMe" asp-route-ticketId="@ticket.Id" style="display:inline">

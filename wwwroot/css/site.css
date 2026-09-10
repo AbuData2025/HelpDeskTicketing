@@ -1,31 +1,146 @@
-html {
-  font-size: 14px;
+:root {
+    --ink: #1B2430;
+    --paper: #F5F6F7;
+    --steel: #5B6B79;
+    --line: #D8DCDE;
+    --amber: #E8A33D;
+    --teal: #3E7C74;
+    --brick: #B4483A;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+html, body {
+    height: 100%;
+    background: var(--paper);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+h1, h2, h3, h4 {
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* ---------- Nav ---------- */
+.navbar {
+    background: var(--ink) !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
-body {
-  margin-bottom: 60px;
+    .navbar-brand, .navbar .nav-link, .navbar .btn-link {
+        color: var(--paper) !important;
+        font-weight: 600;
+    }
+
+        .navbar .nav-link:hover, .navbar .btn-link:hover {
+            color: var(--amber) !important;
+        }
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    border-radius: 4px;
+    font-weight: 600;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    .btn-primary:hover, .btn-primary:focus {
+        background: #0F151C;
+        border-color: #0F151C;
+    }
+
+.btn-outline-primary {
+    color: var(--ink);
+    border-color: var(--ink);
+    border-radius: 4px;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    .btn-outline-primary:hover {
+        background: var(--ink);
+        border-color: var(--ink);
+    }
+
+/* ---------- Cards ---------- */
+.card {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+    .card.stat-open {
+        border-left: 4px solid var(--steel);
+    }
+
+    .card.stat-inprogress {
+        border-left: 4px solid var(--amber);
+    }
+
+    .card.stat-resolved {
+        border-left: 4px solid var(--teal);
+    }
+
+    .card.stat-closed {
+        border-left: 4px solid var(--line);
+    }
+
+/* ---------- Table ---------- */
+.table {
+    border-top: 1px solid var(--line);
+}
+
+    .table thead th {
+        border-bottom: 2px solid var(--ink);
+        font-weight: 600;
+        color: var(--steel);
+    }
+
+    .table td, .table th {
+        border-color: var(--line);
+        vertical-align: middle;
+    }
+
+/* ---------- Badges ---------- */
+.badge-pill {
+    display: inline-block;
+    padding: 0.3em 0.7em;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.badge-status-open {
+    background: var(--steel);
+}
+
+.badge-status-inprogress {
+    background: var(--amber);
+    color: var(--ink);
+}
+
+.badge-status-resolved {
+    background: var(--teal);
+}
+
+.badge-status-closed {
+    background: var(--line);
+    color: var(--ink);
+}
+
+.badge-priority-low {
+    background: var(--line);
+    color: var(--ink);
+}
+
+.badge-priority-medium {
+    background: var(--steel);
+}
+
+.badge-priority-high {
+    background: var(--amber);
+    color: var(--ink);
+}
+
+.badge-priority-critical {
+    background: var(--brick);
 }

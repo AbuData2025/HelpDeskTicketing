@@ -7,30 +7,31 @@
 <h1>Dashboard</h1>
 
 <div class="row text-center mb-4">
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h2>@Model.OpenCount</h2>
-            <p class="text-muted mb-0">Open</p>
-        </div>
+<div class="col-md-3">
+    <div class="card stat-open p-3">
+        <h2>@Model.OpenCount</h2>
+        <p class="text-muted mb-0">Open</p>
     </div>
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h2>@Model.InProgressCount</h2>
-            <p class="text-muted mb-0">In Progress</p>
-        </div>
+</div>
+<div class="col-md-3">
+    <div class="card stat-inprogress p-3">
+        <h2>@Model.InProgressCount</h2>
+        <p class="text-muted mb-0">In Progress</p>
     </div>
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h2>@Model.ResolvedCount</h2>
-            <p class="text-muted mb-0">Resolved</p>
-        </div>
+</div>
+<div class="col-md-3">
+    <div class="card stat-resolved p-3">
+        <h2>@Model.ResolvedCount</h2>
+        <p class="text-muted mb-0">Resolved</p>
     </div>
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h2>@Model.ClosedCount</h2>
-            <p class="text-muted mb-0">Closed</p>
-        </div>
+</div>
+<div class="col-md-3">
+    <div class="card stat-closed p-3">
+        <h2>@Model.ClosedCount</h2>
+        <p class="text-muted mb-0">Closed</p>
     </div>
+</div>
+ 
 </div>
 
 <p><strong>Total Tickets:</strong> @Model.TotalCount</p>

@@ -14,10 +14,10 @@
     <dd class="col-sm-10">@Model.Ticket.Category</dd>
 
     <dt class="col-sm-2">Priority</dt>
-    <dd class="col-sm-10">@Model.Ticket.Priority</dd>
+    <dd class="col-sm-10"><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(Model.Ticket.Priority)">@Model.Ticket.Priority</span></dd>
 
     <dt class="col-sm-2">Status</dt>
-    <dd class="col-sm-10">@Model.Ticket.Status</dd>
+    <dd class="col-sm-10"><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(Model.Ticket.Status)">@Model.Ticket.Status</span></dd>
 
     <dt class="col-sm-2">Assigned To</dt>
     <dd class="col-sm-10">@(Model.Ticket.AssignedToUser?.FullName ?? "Unassigned")</dd>
