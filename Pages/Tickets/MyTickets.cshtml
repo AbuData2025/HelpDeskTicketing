@@ -30,7 +30,7 @@ else
             @foreach (var ticket in Model.Tickets)
             {
                 <tr>
-                    <td>@ticket.Title</td>
+                    <td><a asp-page="./Details" asp-route-id="@ticket.Id">@ticket.Title</a></td>
                     <td>@ticket.Category</td>
                     <td>@ticket.Priority</td>
                     <td>@ticket.Status</td>

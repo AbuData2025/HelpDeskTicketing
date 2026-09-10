@@ -22,7 +22,7 @@
         @foreach (var ticket in Model.Tickets)
         {
             <tr>
-                <td>@ticket.Title</td>
+                <td><a asp-page="/Tickets/Details" asp-route-id="@ticket.Id">@ticket.Title</a></td>
                 <td>@ticket.SubmittedByUser?.FullName</td>
                 <td>@ticket.Category</td>
                 <td>@ticket.Priority</td>
