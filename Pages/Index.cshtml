@@ -1,10 +1,67 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-section">
+    <h1>IT support that doesn't live in a group chat.</h1>
+    <p class="lede">
+        HelpDeskTicketing gives small teams and growing organizations a
+        simple way to log, track, and resolve tech issues — without buying
+        into a full enterprise service desk.
+    </p>
+
+    @if (User.Identity?.IsAuthenticated != true)
+    {
+        <div class="hero-actions">
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg">Get Started</a>
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary btn-lg">Sign In</a>
+        </div>
+    }
+    else if (User.IsInRole("ITAgent") || User.IsInRole("Admin"))
+    {
+        <div class="hero-actions">
+            <a asp-page="/Dashboard" class="btn btn-primary btn-lg">View Dashboard</a>
+            <a asp-page="/Agent/AllTickets" class="btn btn-outline-primary btn-lg">All Tickets</a>
+        </div>
+    }
+    else
+    {
+        <div class="hero-actions">
+            <a asp-page="/Tickets/Create" class="btn btn-primary btn-lg">Submit a Ticket</a>
+            <a asp-page="/Tickets/MyTickets" class="btn btn-outline-primary btn-lg">My Tickets</a>
+        </div>
+    }
+</section>
+
+<section class="steps-section">
+    <div class="step">
+        <span class="step-num">1</span>
+        <h3>Log the issue</h3>
+        <p>Anyone on the team can submit a ticket in under a minute — no more digging through chat history to find who reported what.</p>
+    </div>
+    <div class="step">
+        <span class="step-num">2</span>
+        <h3>Get it assigned</h3>
+        <p>An agent picks it up, so there's always a clear owner instead of a message everyone assumes someone else will handle.</p>
+    </div>
+    <div class="step">
+        <span class="step-num">3</span>
+        <h3>Track it to resolution</h3>
+        <p>Status updates and comments stay attached to the ticket, so nothing gets lost when people move on to the next thing.</p>
+    </div>
+</section>
+
+<section class="why-section">
+    <h2>Why this exists</h2>
+    <p>
+        Most small teams don't have a dedicated IT department — so tech
+        issues get handled the same way everything else does: a message
+        in the group chat, a quick "hey can you look at this," and no real
+        record of what happened. That works fine until it doesn't — until
+        three people report the same printer issue separately, or a fix
+        gets forgotten because it scrolled out of view. HelpDeskTicketing
+        is a small, focused tool built to fix exactly that gap.
+    </p>
+</section>
