@@ -36,6 +36,15 @@ namespace HelpDeskTicketing.Pages.Tickets
 
             // Only bind the fields the user should be able to set directly —
             // never trust Status, CreatedAt, or AssignedToUserId from client input
+            var now = DateTime.UtcNow;
+            var dueBy = Ticket.Priority switch
+            {
+                TicketPriority.Critical => now.AddHours(4),
+                TicketPriority.High => now.AddDays(1),
+                TicketPriority.Medium => now.AddDays(3),
+                _ => now.AddDays(5)
+            };
+
             var ticket = new Ticket
             {
                 Title = Ticket.Title,
@@ -43,7 +52,8 @@ namespace HelpDeskTicketing.Pages.Tickets
                 Category = Ticket.Category,
                 Priority = Ticket.Priority,
                 Status = TicketStatus.Open,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = now,
+                DueBy = dueBy,
                 SubmittedByUserId = user.Id
             };
 

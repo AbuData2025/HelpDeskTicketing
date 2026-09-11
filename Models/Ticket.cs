@@ -22,6 +22,8 @@ namespace HelpDeskTicketing.Models
 
         public DateTime? UpdatedAt { get; set; }
 
+        public DateTime? DueBy { get; set; }
+
         // The person who submitted the ticket
         [Required]
         public string SubmittedByUserId { get; set; } = string.Empty;
