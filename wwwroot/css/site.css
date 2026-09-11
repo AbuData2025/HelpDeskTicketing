@@ -222,3 +222,16 @@ h1, h2, h3, h4 {
         grid-template-columns: 1fr;
     }
 }
+
+.badge-sla-ok {
+    background: var(--teal);
+}
+
+.badge-sla-warning {
+    background: var(--amber);
+    color: var(--ink);
+}
+
+.badge-sla-breached {
+    background: var(--brick);
+}

@@ -21,5 +21,28 @@ namespace HelpDeskTicketing.Helpers
             TicketPriority.Critical => "badge-priority-critical",
             _ => "badge-priority-low"
         };
+
+        public static string SlaBadge(Ticket ticket)
+        {
+            if (ticket.DueBy == null) return "";
+
+            if (ticket.Status == TicketStatus.Resolved || ticket.Status == TicketStatus.Closed)
+            {
+                return "<span class=\"badge-pill badge-sla-ok\">Completed</span>";
+            }
+
+            if (DateTime.UtcNow > ticket.DueBy)
+            {
+                return "<span class=\"badge-pill badge-sla-breached\">Overdue</span>";
+            }
+
+            var hoursLeft = (ticket.DueBy.Value - DateTime.UtcNow).TotalHours;
+            if (hoursLeft <= 24)
+            {
+                return "<span class=\"badge-pill badge-sla-warning\">Due soon</span>";
+            }
+
+            return "<span class=\"badge-pill badge-sla-ok\">On track</span>";
+        }
     }
 }

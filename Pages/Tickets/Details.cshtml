@@ -19,6 +19,9 @@
     <dt class="col-sm-2">Status</dt>
     <dd class="col-sm-10"><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(Model.Ticket.Status)">@Model.Ticket.Status</span></dd>
 
+    <dt class="col-sm-2">SLA</dt>
+    <dd class="col-sm-10">@Html.Raw(HelpDeskTicketing.Helpers.TicketStyleHelpers.SlaBadge(Model.Ticket))</dd>
+
     <dt class="col-sm-2">Assigned To</dt>
     <dd class="col-sm-10">@(Model.Ticket.AssignedToUser?.FullName ?? "Unassigned")</dd>
 

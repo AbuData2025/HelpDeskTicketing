@@ -25,6 +25,7 @@ else
                 <th>Category</th>
                 <th>Priority</th>
                 <th>Status</th>
+                <th>SLA</th>
                 <th>Submitted</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@ else
                     <td>@ticket.Category</td>
                     <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(ticket.Priority)">@ticket.Priority</span></td>
                     <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(ticket.Status)">@ticket.Status</span></td>
+                    <td>@Html.Raw(HelpDeskTicketing.Helpers.TicketStyleHelpers.SlaBadge(ticket))</td>
                     <td>@ticket.CreatedAt.ToLocalTime().ToString("g")</td>
                 </tr>
             }

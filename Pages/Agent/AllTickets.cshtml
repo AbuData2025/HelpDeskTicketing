@@ -75,6 +75,7 @@ else
                 <th>Priority</th>
                 <th>Status</th>
                 <th>Assigned To</th>
+                <th>SLA</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -88,6 +89,7 @@ else
                     <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(ticket.Priority)">@ticket.Priority</span></td>
                     <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(ticket.Status)">@ticket.Status</span></td>
                     <td>@(ticket.AssignedToUser?.FullName ?? "Unassigned")</td>
+                    <td>@Html.Raw(HelpDeskTicketing.Helpers.TicketStyleHelpers.SlaBadge(ticket))</td>
                     <td>
                         <form method="post" asp-page-handler="AssignToMe" asp-route-ticketId="@ticket.Id" asp-route-SearchTerm="@Model.SearchTerm" asp-route-StatusFilter="@Model.StatusFilter" asp-route-PriorityFilter="@Model.PriorityFilter" asp-route-SortBy="@Model.SortBy" style="display:inline">
                             <button type="submit" class="btn btn-sm btn-outline-primary">Assign to Me</button>
