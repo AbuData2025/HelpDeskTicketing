@@ -26,6 +26,20 @@
     <dd class="col-sm-10">@Model.Ticket.Description</dd>
 </dl>
 
+<h3>Activity</h3>
+<ul class="list-unstyled">
+    @foreach (var activity in Model.Activities)
+    {
+        <li class="mb-2">
+            <i class="ti ti-clock text-muted me-1"></i>
+            <span>@activity.Description</span>
+            <small class="text-muted">
+                — @activity.ActorUser?.FullName, @activity.CreatedAt.ToLocalTime().ToString("g")
+            </small>
+        </li>
+    }
+</ul>
+
 <hr />
 
 <h3>Comments</h3>

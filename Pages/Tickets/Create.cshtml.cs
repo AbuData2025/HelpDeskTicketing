@@ -58,6 +58,15 @@ namespace HelpDeskTicketing.Pages.Tickets
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
 
+            _context.TicketActivities.Add(new TicketActivity
+            {
+                TicketId = ticket.Id,
+                ActorUserId = user.Id,
+                Description = "Ticket created",
+                CreatedAt = DateTime.UtcNow
+            });
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("./MyTickets");
         }
     }

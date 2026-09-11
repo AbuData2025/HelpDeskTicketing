@@ -80,20 +80,41 @@ namespace HelpDeskTicketing.Pages.Agent
             ticket.Status = TicketStatus.InProgress;
             ticket.UpdatedAt = DateTime.UtcNow;
 
+            _context.TicketActivities.Add(new TicketActivity
+            {
+                TicketId = ticket.Id,
+                ActorUserId = user.Id,
+                Description = $"Assigned to {user.FullName}",
+                CreatedAt = DateTime.UtcNow
+            });
+
             await _context.SaveChangesAsync();
             return RedirectToPage(new { SearchTerm, StatusFilter, PriorityFilter, SortBy });
         }
 
         public async Task<IActionResult> OnPostUpdateStatusAsync(int ticketId, TicketStatus newStatus)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
+
             var ticket = await _context.Tickets.FindAsync(ticketId);
             if (ticket == null) return NotFound();
 
+            var oldStatus = ticket.Status;
             ticket.Status = newStatus;
             ticket.UpdatedAt = DateTime.UtcNow;
+
+            _context.TicketActivities.Add(new TicketActivity
+            {
+                TicketId = ticket.Id,
+                ActorUserId = user.Id,
+                Description = $"Status changed from {oldStatus} to {newStatus}",
+                CreatedAt = DateTime.UtcNow
+            });
 
             await _context.SaveChangesAsync();
             return RedirectToPage(new { SearchTerm, StatusFilter, PriorityFilter, SortBy });
         }
+    
     }
 }

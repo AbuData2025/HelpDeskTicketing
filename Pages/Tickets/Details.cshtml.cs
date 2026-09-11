@@ -22,6 +22,7 @@ namespace HelpDeskTicketing.Pages.Tickets
 
         public Ticket Ticket { get; set; } = default!;
         public List<TicketComment> Comments { get; set; } = new();
+        public List<TicketActivity> Activities { get; set; } = new();
 
         [BindProperty]
         public string NewCommentBody { get; set; } = string.Empty;
@@ -53,6 +54,12 @@ namespace HelpDeskTicketing.Pages.Tickets
                 .OrderBy(c => c.CreatedAt)
                 .ToListAsync();
 
+            Activities = await _context.TicketActivities
+                .Include(a => a.ActorUser)
+                .Where(a => a.TicketId == id)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
+
             return Page();
         }
 
@@ -79,6 +86,15 @@ namespace HelpDeskTicketing.Pages.Tickets
                     AuthorUserId = user.Id,
                     CreatedAt = DateTime.UtcNow
                 });
+
+                _context.TicketActivities.Add(new TicketActivity
+                {
+                    TicketId = id,
+                    ActorUserId = user.Id,
+                    Description = "Added a comment",
+                    CreatedAt = DateTime.UtcNow
+                });
+
                 await _context.SaveChangesAsync();
             }
 
