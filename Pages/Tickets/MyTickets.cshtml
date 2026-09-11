@@ -12,7 +12,9 @@
 
 @if (!Model.Tickets.Any())
 {
-    <p>You haven't submitted any tickets yet.</p>
+    <div class="card p-4 text-center">
+        <p class="mb-0 text-muted">You haven't submitted any tickets yet. Hit the button above to log your first one.</p>
+    </div>
 }
 else
 {
