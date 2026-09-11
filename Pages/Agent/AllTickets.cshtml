@@ -6,50 +6,111 @@
 
 <h1>All Tickets</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Submitted By</th>
-            <th>Category</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Assigned To</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ticket in Model.Tickets)
-        {
-            <tr>
-                <td><a asp-page="/Tickets/Details" asp-route-id="@ticket.Id">@ticket.Title</a></td>
-                <td>@ticket.SubmittedByUser?.FullName</td>
-                <td>@ticket.Category</td>
-                <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(ticket.Priority)">@ticket.Priority</span></td>
-                <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(ticket.Status)">@ticket.Status</span></td>
-                <td>@(ticket.AssignedToUser?.FullName ?? "Unassigned")</td>
-                <td>
-                    <form method="post" asp-page-handler="AssignToMe" asp-route-ticketId="@ticket.Id" style="display:inline">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">Assign to Me</button>
-                    </form>
+<form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-4">
+        <label class="form-label">Search</label>
+        <input type="text" name="SearchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Title or description..." />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Status</label>
+        <select name="StatusFilter" class="form-select">
+            <option value="">All</option>
+            @foreach (var status in Enum.GetValues<HelpDeskTicketing.Models.TicketStatus>())
+            {
+                if (Model.StatusFilter == status)
+                {
+                    <option value="@status" selected>@status</option>
+                }
+                else
+                {
+                    <option value="@status">@status</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Priority</label>
+        <select name="PriorityFilter" class="form-select">
+            <option value="">All</option>
+            @foreach (var priority in Enum.GetValues<HelpDeskTicketing.Models.TicketPriority>())
+            {
+                if (Model.PriorityFilter == priority)
+                {
+                    <option value="@priority" selected>@priority</option>
+                }
+                else
+                {
+                    <option value="@priority">@priority</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Sort</label>
+        <select name="SortBy" class="form-select">
+            <option value="newest" selected="@(Model.SortBy == "newest")">Newest first</option>
+            <option value="oldest" selected="@(Model.SortBy == "oldest")">Oldest first</option>
+            <option value="priority" selected="@(Model.SortBy == "priority")">Priority</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Apply</button>
+    </div>
+</form>
 
-                    <form method="post" asp-page-handler="UpdateStatus" asp-route-ticketId="@ticket.Id" style="display:inline">
-                        <select name="newStatus" class="form-select form-select-sm d-inline" style="width:auto" onchange="this.form.submit()">
-                            @foreach (var status in Enum.GetValues<HelpDeskTicketing.Models.TicketStatus>())
-                            {
-                                if (status == ticket.Status)
-                                {
-                                    <option value="@status" selected>@status</option>
-                                }
-                                else
-                                {
-                                    <option value="@status">@status</option>
-                                }
-                            }
-                        </select>
-                    </form>
-                </td>
+@if (!Model.Tickets.Any())
+{
+    <div class="card p-4 text-center">
+        <p class="mb-0 text-muted">No tickets match these filters. Try broadening your search.</p>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Submitted By</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model.Tickets)
+            {
+                <tr>
+                    <td><a asp-page="/Tickets/Details" asp-route-id="@ticket.Id">@ticket.Title</a></td>
+                    <td>@ticket.SubmittedByUser?.FullName</td>
+                    <td>@ticket.Category</td>
+                    <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.PriorityBadgeClass(ticket.Priority)">@ticket.Priority</span></td>
+                    <td><span class="badge-pill @HelpDeskTicketing.Helpers.TicketStyleHelpers.StatusBadgeClass(ticket.Status)">@ticket.Status</span></td>
+                    <td>@(ticket.AssignedToUser?.FullName ?? "Unassigned")</td>
+                    <td>
+                        <form method="post" asp-page-handler="AssignToMe" asp-route-ticketId="@ticket.Id" asp-route-SearchTerm="@Model.SearchTerm" asp-route-StatusFilter="@Model.StatusFilter" asp-route-PriorityFilter="@Model.PriorityFilter" asp-route-SortBy="@Model.SortBy" style="display:inline">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Assign to Me</button>
+                        </form>
+
+                        <form method="post" asp-page-handler="UpdateStatus" asp-route-ticketId="@ticket.Id" asp-route-SearchTerm="@Model.SearchTerm" asp-route-StatusFilter="@Model.StatusFilter" asp-route-PriorityFilter="@Model.PriorityFilter" asp-route-SortBy="@Model.SortBy" style="display:inline">
+                            <select name="newStatus" class="form-select form-select-sm d-inline" style="width:auto" onchange="this.form.submit()">
+                                @foreach (var status in Enum.GetValues<HelpDeskTicketing.Models.TicketStatus>())
+                                {
+                                    if (status == ticket.Status)
+                                    {
+                                        <option value="@status" selected>@status</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@status">@status</option>
+                                    }
+                                }
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

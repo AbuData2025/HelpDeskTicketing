@@ -22,13 +22,50 @@ namespace HelpDeskTicketing.Pages.Agent
 
         public IList<Ticket> Tickets { get; set; } = new List<Ticket>();
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchTerm { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public TicketStatus? StatusFilter { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public TicketPriority? PriorityFilter { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SortBy { get; set; } = "newest";
+
         public async Task OnGetAsync()
         {
-            Tickets = await _context.Tickets
+            var query = _context.Tickets
                 .Include(t => t.SubmittedByUser)
                 .Include(t => t.AssignedToUser)
-                .OrderByDescending(t => t.CreatedAt)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(SearchTerm))
+            {
+                query = query.Where(t =>
+                    t.Title.Contains(SearchTerm) ||
+                    t.Description.Contains(SearchTerm));
+            }
+
+            if (StatusFilter.HasValue)
+            {
+                query = query.Where(t => t.Status == StatusFilter.Value);
+            }
+
+            if (PriorityFilter.HasValue)
+            {
+                query = query.Where(t => t.Priority == PriorityFilter.Value);
+            }
+
+            query = SortBy switch
+            {
+                "oldest" => query.OrderBy(t => t.CreatedAt),
+                "priority" => query.OrderByDescending(t => t.Priority),
+                _ => query.OrderByDescending(t => t.CreatedAt)
+            };
+
+            Tickets = await query.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAssignToMeAsync(int ticketId)
@@ -44,7 +81,7 @@ namespace HelpDeskTicketing.Pages.Agent
             ticket.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
-            return RedirectToPage();
+            return RedirectToPage(new { SearchTerm, StatusFilter, PriorityFilter, SortBy });
         }
 
         public async Task<IActionResult> OnPostUpdateStatusAsync(int ticketId, TicketStatus newStatus)
@@ -56,7 +93,7 @@ namespace HelpDeskTicketing.Pages.Agent
             ticket.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
-            return RedirectToPage();
+            return RedirectToPage(new { SearchTerm, StatusFilter, PriorityFilter, SortBy });
         }
     }
 }

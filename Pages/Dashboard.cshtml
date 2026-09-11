@@ -34,6 +34,14 @@
  
 </div>
 
-<p><strong>Total Tickets:</strong> @Model.TotalCount</p>
-
-<a asp-page="/Agent/AllTickets" class="btn btn-primary">View All Tickets</a>
+@if (Model.TotalCount == 0)
+{
+    <div class="card p-4 text-center">
+        <p class="mb-0 text-muted">No tickets yet. Once someone submits one, it'll show up here.</p>
+    </div>
+}
+else
+{
+    <p><strong>Total Tickets:</strong> @Model.TotalCount</p>
+    <a asp-page="/Agent/AllTickets" class="btn btn-primary">View All Tickets</a>
+}
