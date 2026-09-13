@@ -22,6 +22,11 @@ namespace HelpDeskTicketing.Pages
         public int ClosedCount { get; set; }
         public int TotalCount { get; set; }
 
+        public int LowCount { get; set; }
+        public int MediumCount { get; set; }
+        public int HighCount { get; set; }
+        public int CriticalCount { get; set; }
+
         public async Task OnGetAsync()
         {
             OpenCount = await _context.Tickets.CountAsync(t => t.Status == TicketStatus.Open);
@@ -29,6 +34,11 @@ namespace HelpDeskTicketing.Pages
             ResolvedCount = await _context.Tickets.CountAsync(t => t.Status == TicketStatus.Resolved);
             ClosedCount = await _context.Tickets.CountAsync(t => t.Status == TicketStatus.Closed);
             TotalCount = OpenCount + InProgressCount + ResolvedCount + ClosedCount;
+
+            LowCount = await _context.Tickets.CountAsync(t => t.Priority == TicketPriority.Low);
+            MediumCount = await _context.Tickets.CountAsync(t => t.Priority == TicketPriority.Medium);
+            HighCount = await _context.Tickets.CountAsync(t => t.Priority == TicketPriority.High);
+            CriticalCount = await _context.Tickets.CountAsync(t => t.Priority == TicketPriority.Critical);
         }
     }
 }

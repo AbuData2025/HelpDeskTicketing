@@ -42,6 +42,55 @@
 }
 else
 {
-    <p><strong>Total Tickets:</strong> @Model.TotalCount</p>
-    <a asp-page="/Agent/AllTickets" class="btn btn-primary">View All Tickets</a>
+      <p><strong>Total Tickets:</strong> @Model.TotalCount</p>
+    <a asp-page="/Agent/AllTickets" class="btn btn-primary mb-4">View All Tickets</a>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="h5">Tickets by Status</h3>
+            <div style="max-height: 300px;">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="h5">Tickets by Priority</h3>
+            <div style="max-height: 300px;">
+                <canvas id="priorityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+        new Chart(document.getElementById('statusChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Open', 'In Progress', 'Resolved', 'Closed'],
+                datasets: [{
+                    label: 'Tickets',
+                    data: [@Model.OpenCount, @Model.InProgressCount, @Model.ResolvedCount, @Model.ClosedCount],
+                    backgroundColor: ['#5B6B79', '#E8A33D', '#3E7C74', '#D8DCDE']
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        new Chart(document.getElementById('priorityChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Low', 'Medium', 'High', 'Critical'],
+                datasets: [{
+                    data: [@Model.LowCount, @Model.MediumCount, @Model.HighCount, @Model.CriticalCount],
+                    backgroundColor: ['#D8DCDE', '#5B6B79', '#E8A33D', '#B4483A']
+                }]
+            },
+            options: {
+                maintainAspectRatio: false
+            }
+        });
+    </script>
 }
