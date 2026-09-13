@@ -235,3 +235,49 @@ h1, h2, h3, h4 {
 .badge-sla-breached {
     background: var(--brick);
 }
+
+.privacy-page {
+    max-width: 700px;
+    margin: 2rem auto;
+}
+
+    .privacy-page p {
+        color: var(--steel);
+        line-height: 1.6;
+    }
+
+.status-page {
+    max-width: 500px;
+    margin: 5rem auto;
+}
+
+.status-code {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--line);
+    margin-bottom: 0;
+}
+
+.site-footer {
+    border-top: 1px solid var(--line);
+    padding: 1.25rem 0;
+    margin-top: 3rem;
+    color: var(--steel);
+    font-size: 0.9rem;
+}
+
+    .site-footer a {
+        color: var(--steel);
+        text-decoration: none;
+    }
+
+        .site-footer a:hover {
+            color: var(--ink);
+        }
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 1.1rem;
+}

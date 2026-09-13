@@ -34,6 +34,8 @@ else
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
